@@ -31,13 +31,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 1rem;
+  background-attachment: fixed;
+  /* Parallax-like effect */
 }
 
 .container {
   width: 100%;
-  max-width: 800px;
+  max-width: 900px;
+  /* Increased slightly for better spacing */
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 /* Header */
@@ -81,24 +86,47 @@ body {
 
 /* Content */
 .content {
-  background: var(--bg-card);
-  border-radius: 16px;
-  padding: 2.5rem;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--border);
+  background: rgba(30, 41, 59, 0.7);
+  /* Glassmorphism base */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 24px;
+  padding: 3rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Form */
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
+  width: 100%;
+  /* Ensure full width */
+  margin: 0 auto;
+  /* Center form */
 }
 
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  /* Better wrapping */
   gap: 1.5rem;
+  width: 100%;
 }
 
 .form-group {
@@ -108,39 +136,48 @@ body {
 }
 
 .form-group label {
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-gray);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  transition: color 0.3s;
+}
+
+.form-group:focus-within label {
+  color: var(--primary);
 }
 
 .form-group input {
-  padding: 0.75rem 1rem;
+  padding: 0.875rem 1rem;
   border: 2px solid var(--border);
-  border-radius: 8px;
-  background: var(--bg-dark);
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.6);
   color: var(--text-light);
   font-size: 1rem;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
 }
 
 .form-group input:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  background: rgba(15, 23, 42, 0.9);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+  transform: translateY(-1px);
 }
 
 .form-group input::placeholder {
   color: var(--text-gray);
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
 .helper-text {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--text-gray);
-  opacity: 0.8;
+  opacity: 0.7;
+  margin-left: 0.25rem;
 }
 
 /* Buttons */
@@ -550,18 +587,23 @@ body {
   color: #60a5fa;
 }
 
-/* Responsive */
-@media (max-width: 640px) {
-  .header h1 {
-    font-size: 2rem;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .app {
+    padding: 1rem;
   }
 
   .content {
     padding: 1.5rem;
   }
 
+  .header h1 {
+    font-size: 2rem;
+  }
+
   .form-grid {
     grid-template-columns: 1fr;
+    /* Stack inputs on mobile */
   }
 
   .button-group {
@@ -570,10 +612,33 @@ body {
 
   .modal-content {
     padding: 1.5rem;
+    width: 95%;
+    /* Better width on mobile */
   }
 
   .header-top {
     justify-content: center;
+  }
+
+  .nav-toggle {
+    width: 100%;
+    margin-top: 1.5rem;
+  }
+
+  .nav-btn {
+    flex: 1;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.75rem;
+  }
+
+  .icon {
+    font-size: 3rem;
   }
 }
 
