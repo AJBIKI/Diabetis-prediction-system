@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import API_URL from '../config';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
     PieChart, Pie, Cell, Legend
@@ -19,7 +20,7 @@ const Dashboard = () => {
 
     const fetchHistory = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/history?limit=50', {
+            const response = await fetch(`${API_URL}/api/history?limit=50`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
