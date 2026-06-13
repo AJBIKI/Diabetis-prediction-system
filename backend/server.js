@@ -15,12 +15,22 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-    .then(() => console.log('✓ MongoDB Connected'))
-    .catch((err) => console.log('MongoDB Connection Error:', err.message));
+const connectDB = async () => {
+    try {
+        const conn = await mongoose.connect(process.env.MONGODB_URI);
+        console.log(`✓ MongoDB Connected: ${conn.connection.host}`);
+    } catch (err) {
+        console.error('✗ MongoDB Connection Error:', err.message);
+        console.error('  Check your MONGODB_URI in .env and ensure Atlas IP whitelist includes your IP.');
+        process.exit(1); // Exit so the process doesn't run in a broken state
+    }
+};
+
+connectDB();
+
+// Log subsequent connection events
+mongoose.connection.on('disconnected', () => console.warn('⚠ MongoDB disconnected'));
+mongoose.connection.on('reconnected', () => console.log('✓ MongoDB reconnected'));
 
 // API Routes
 
